@@ -1,0 +1,12 @@
+apiVersion: k3d.io/v1alpha5
+# https://k3d.io/v5.4.1/usage/configfile/
+kind: Simple
+metadata:
+    name: knative-playground
+ports:
+  - port: 8080:80 # same as `--port '8080:80@loadbalancer'`
+    nodeFilters:
+      - server:0:direct
+options:
+  k3d:
+    disableLoadbalancer: true

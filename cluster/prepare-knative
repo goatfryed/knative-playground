@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+curl -sSL https://github.com/knative/operator/releases/download/knative-v1.14.0/operator.yaml \
+  | grep 'gcr.io/' | awk '{print $2}' | sort | uniq \
+  | xargs -n 1 \
+    cosign verify -o text \
+      --certificate-identity=signer@knative-releases.iam.gserviceaccount.com \
+      --certificate-oidc-issuer=https://accounts.google.com
+
+kubectl apply -f https://github.com/knative/operator/releases/download/knative-v1.14.0/operator.yaml
